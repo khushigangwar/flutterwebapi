@@ -20,6 +20,11 @@ class _MainPageState extends State<MainPage> {
     setState(() {});
   }
 
+  void deleteData(int Id) async {
+    final response = await apiHandler.deleteUser(Id: Id);
+    setState(() {});
+  }
+
   @override
   void initState() {
     getData();
@@ -58,16 +63,18 @@ class _MainPageState extends State<MainPage> {
             itemCount: data.length,
             itemBuilder: (context, index) {
               return ListTile(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditPage(user: data[index])));
-                },
-                leading: Text("${data[index].id}"),
-                title: Text(data[index].user),
-                subtitle: Text(data[index].address),
-              );
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditPage(user: data[index])));
+                  },
+                  leading: Text("${data[index].Id}"),
+                  title: Text(data[index].user),
+                  subtitle: Text(data[index].address),
+                  trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: deleteData(data[index].Id)));
             },
           )
         ],

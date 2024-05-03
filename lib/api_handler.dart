@@ -25,8 +25,8 @@ class ApiHandler {
   }
 
   Future<http.Response> updateUser(
-      {required int id, required User user}) async {
-    final uri = Uri.parse("$baseUri/$id");
+      {required int Id, required User user}) async {
+    final uri = Uri.parse("$baseUri/$Id");
     late http.Response response;
     try {
       response = await http.put(
@@ -59,5 +59,21 @@ class ApiHandler {
       response = http.Response('Error occurred during request : $e', 500);
     }
     return response;
+  }
+
+  Future<http.Response> deleteUser({required int Id}) async {
+    final uri = Uri.parse("$baseUri/Id");
+    late http.Response response;
+    try {
+      response = await http.delete(
+        uri,
+        headers: <String, String>{
+          'Content-type': "application/json; charset=UTF-8",
+        },
+      );
+      return response;
+    } catch (e) {
+      return response;
+    }
   }
 }

@@ -17,19 +17,23 @@ class _AddUserState extends State<AddUser> {
   ApiHandler apiHandler = ApiHandler();
 
   void addUser() async {
-    if (_formKey.currentState!.saveAndValidate()) {
-      final data = _formKey.currentState!.value;
-      final user = User(
-        id: 0,
-        user: data['user'],
-        address: data['address'],
-      );
+    try {
+      if (_formKey.currentState!.saveAndValidate()) {
+        final data = _formKey.currentState!.value;
+        final user = User(
+          Id: 0,
+          user: data['user'],
+          address: data['address'],
+        );
 
-      await apiHandler.addUser(user: user);
+        await apiHandler.addUser(user: user);
+      }
+
+      if (!mounted) return;
+      Navigator.pop(context);
+    } catch (e) {
+      debugPrint('An error occured:$e');
     }
-
-    if (!mounted) return;
-    Navigator.pop(context);
   }
 
   @override

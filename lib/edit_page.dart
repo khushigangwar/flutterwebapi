@@ -18,20 +18,24 @@ class _EditPageState extends State<EditPage> {
   ApiHandler apiHandler = ApiHandler();
   late http.Response response;
   void updateData() async {
-    if (_formKey.currentState!.saveAndValidate()) {
-      final data = _formKey.currentState!.value;
-      debugPrint('User ID: ${widget.user.id}');
-      debugPrint('User Name: ${data['user']}');
-      debugPrint('Address Data: ${data['address']}');
-      final user = User(
-        id: widget.user.id,
-        user: data['user'],
-        address: data['address'],
-      );
-      response = await apiHandler.updateUser(id: widget.user.id, user: user);
+    try {
+      if (_formKey.currentState!.saveAndValidate()) {
+        final data = _formKey.currentState!.value;
+        debugPrint('User ID: ${widget.user.Id}');
+        debugPrint('User Name: ${data['user']}');
+        debugPrint('Address Data: ${data['address']}');
+        final user = User(
+          Id: widget.user.Id,
+          user: data['user'],
+          address: data['address'],
+        );
+        response = await apiHandler.updateUser(Id: widget.user.Id, user: user);
+      }
+      if (!mounted) return;
+      Navigator.pop(context);
+    } catch (e) {
+      debugPrint('An error occured:$e');
     }
-    if (!mounted) return;
-    Navigator.pop(context);
   }
 
   @override
